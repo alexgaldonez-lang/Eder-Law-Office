@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ELA — Eder Anglouan Law Office | Atty. Ryan D. Eder | Dalupang St., Cauayan City, Isabela.">
+<title>ELA | Eder Anglouan Law Office</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <a class="brand" href="#home"><strong>ELA</strong><span>EDER ANGLOUAN<small>LAW OFFICE</small></span></a>
+  <nav id="nav">
+    <a href="#home">Home</a><a href="#about">About</a><a href="#practice">Practice Areas</a>
+    <a href="#attorney">The Attorney</a><a href="#contact">Contact</a>
+    <a class="cta" href="#contact">Consultation</a>
+  </nav>
+  <button class="menu" onclick="document.getElementById('nav').classList.toggle('open')">☰</button>
+</header>
+
+<section id="home" class="hero">
+  <div class="hero-inner">
+    <div>
+      <p class="eyebrow">PEOPLE · RIGHTS · SOLUTIONS</p>
+      <h1>Trusted Legal Counsel<br><em>for a Stronger Tomorrow.</em></h1>
+      <div class="line"></div>
+      <p class="firm">ELA — Eder Anglouan Law Office</p>
+      <p class="location">Dalupang St., Cauayan City, Isabela</p>
+      <a class="button dark" href="#contact">Schedule a Consultation →</a>
+    </div>
+    <div class="hero-note"><p>“Justice is not just a profession, but a commitment to people.”</p><small>— ATTY. RYAN D. EDER</small></div>
+  </div>
+</section>
+
+<section id="practice" class="practice">
+  <div class="center"><p class="eyebrow">PRACTICE AREAS</p><h2>Comprehensive Legal Services</h2></div>
+  <div class="practice-grid">
+    <div><b>⚖</b><span>Civil<br>Litigation</span></div><div><b>▥</b><span>Criminal Law</span></div>
+    <div><b>▤</b><span>Corporate &<br>Commercial Law</span></div><div><b>♙</b><span>Labor Law</span></div>
+    <div><b>♧</b><span>Family Law</span></div><div><b>⌂</b><span>Real Estate &<br>Property Law</span></div>
+    <div><b>▣</b><span>Administrative &<br>Government Law</span></div>
+  </div>
+</section>
+
+<section id="about" class="about">
+  <div><p class="eyebrow">ABOUT THE FIRM</p><h2>Rooted in the Community.<br>Committed to Justice.</h2>
+    <p>ELA — Eder Anglouan Law Office is dedicated to providing practical and effective legal solutions with integrity, diligence, and a genuine commitment to the people we serve in Cauayan City, Isabela and beyond.</p>
+    <a class="button light" href="#contact">Learn More About ELA →</a>
+  </div>
+  <div class="values">
+    <p><b>01</b><span>INTEGRITY<br><i>Upholding the highest professional standards.</i></span></p>
+    <p><b>02</b><span>DEDICATION<br><i>Client-focused and solution-driven.</i></span></p>
+    <p><b>03</b><span>COMMUNITY<br><i>Rooted in Cauayan City, Isabela.</i></span></p>
+  </div>
+</section>
+
+<section id="attorney" class="attorney">
+  <div class="attorney-copy"><p class="eyebrow">THE ATTORNEY</p><h2>Atty. Ryan D. Eder</h2><p class="role">Managing Attorney</p>
+    <p>Atty. Ryan D. Eder is the Managing Attorney of Eder Anglouan Law Office, committed to providing practical, effective, and principled legal solutions.</p>
+    <p>He believes in the power of the law to protect rights, uphold fairness, and create a better, more just community.</p>
+    <div class="mini-values"><span>⚖<small>Principled<br>Counsel</small></span><span>◈<small>Result-Oriented<br>Solutions</small></span><span>♙<small>Service to<br>the Community</small></span></div>
+  </div>
+  <div class="attorney-photo"><img src="attorney-ryan-eder-barong.jpg" alt="Atty. Ryan D. Eder wearing a barong Tagalog"></div>
+</section>
+
+<section id="contact" class="contact">
+  <div><p class="eyebrow">GET IN TOUCH</p><h2>Schedule a Consultation</h2><p>For inquiries or to schedule a consultation, please reach out to the office.</p>
+    <div class="details"><p><b>OFFICE</b><br>Dalupang St., Cauayan City, Isabela</p><p><b>ATTORNEY</b><br>Atty. Ryan D. Eder</p><p><b>CONTACT</b><br>Replace with your official phone and email.</p></div>
+  </div>
+  <form onsubmit="submitForm(event)"><p class="eyebrow">REQUEST A CONSULTATION</p><div class="row"><input required placeholder="Full Name"><input type="email" required placeholder="Email Address"></div><div class="row"><input placeholder="Contact Number"><input placeholder="Subject"></div><textarea required placeholder="Message"></textarea><button class="button dark">Send Inquiry →</button><small id="msg"></small></form>
+</section>
+
+<footer><div><strong>ELA</strong> EDER ANGLOUAN LAW OFFICE<br><small>Dalupang St., Cauayan City, Isabela</small></div><div>© 2026 Eder Anglouan Law Office. All Rights Reserved.</div><div>LAW · PEOPLE · JUSTICE</div></footer>
+<script>function submitForm(e){e.preventDefault();document.getElementById('msg').textContent='Thank you. Please contact the office directly to confirm your consultation.'}</script>
+</body>
+</html>
