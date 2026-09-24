@@ -70,11 +70,16 @@
   <div><p class="eyebrow">GET IN TOUCH</p><h2>Schedule a Consultation</h2><p>For inquiries or to schedule a consultation, please reach out to the office.</p>
     <div class="details"><p><b>OFFICE</b><br>Dalupang St., Cauayan City, Isabela</p><p><b>ATTORNEY</b><br>Atty. Ryan D. Eder</p><p><b>CONTACT</b><br>Replace with your official phone and email.</p></div>
   </div>
-  <form action="https://formsubmit.co/alexgaldonez@gmail.com" method="POST">
+  
+      <div id="consultationSuccess" class="consultation-success" role="status" aria-live="polite">
+        <strong>Thank you for your inquiry.</strong>
+        <span>Your consultation request has been sent to the office. We appreciate you reaching out to Eder Anglouan Law Office. Please keep your email and phone available in case the office needs to contact you.</span>
+      </div>
+<form action="https://formsubmit.co/alexgaldonez@gmail.com" method="POST">
       <input type="hidden" name="_subject" value="New Consultation Inquiry — Eder Anglouan Law Office">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_captcha" value="true">
-      <input type="hidden" name="_next" value="https://alexgaldonez-lang.github.io/Eder-Law-Office/">
+      <input type="hidden" name="_next" value="https://alexgaldonez-lang.github.io/Eder-Law-Office/?submitted=1">
       <input type="hidden" name="_autoresponse" value="Thank you for contacting Eder Anglouan Law Office. Your inquiry has been received. The office will contact you regarding your consultation request.">
 <p class="eyebrow">REQUEST A CONSULTATION</p><div class="row"><input name="Full Name" required placeholder="Full Name"><input name="Email Address" type="email" required placeholder="Email Address"></div><div class="row"><input name="Contact Number" placeholder="Contact Number"><input name="Subject" placeholder="Subject"></div><textarea name="Message" required placeholder="Message"></textarea><button type="submit" class="button dark">Send Inquiry →</button></form>
 </section>
@@ -103,6 +108,13 @@
     display:flex;align-items:center;justify-content:space-between;
   }
   .chatbot-head strong{font-family:"Cormorant Garamond",serif;font-size:23px}
+  .chatbot-brand{display:flex;align-items:center;gap:10px}
+  .secretary-avatar{
+    width:38px;height:38px;border-radius:50%;background:#fff;color:#111;
+    display:flex;align-items:center;justify-content:center;font-size:22px;
+    flex:0 0 38px;
+  }
+
   .chatbot-head small{display:block;font-family:Inter,sans-serif;font-size:10px;letter-spacing:1.4px;margin-top:2px;opacity:.75}
   .chatbot-close{border:0;background:transparent;color:#fff;font-size:22px;cursor:pointer}
   .chatbot-messages{
@@ -129,17 +141,25 @@
     .chatbot{right:16px;bottom:86px;height:470px}
     .chatbot-toggle{right:16px;bottom:16px}
   }
+
+  .consultation-success{
+    display:none;margin:18px 0;padding:16px 18px;border-left:3px solid #111;
+    background:#f5f5f5;font-family:Inter,sans-serif;font-size:13px;line-height:1.6;
+  }
+  .consultation-success strong{display:block;margin-bottom:5px;font-family:"Cormorant Garamond",serif;font-size:21px}
+  .consultation-success span{display:block}
+
 </style>
 
 <button class="chatbot-toggle" id="chatbotToggle" aria-label="Open legal office assistant">💬</button>
 
 <div class="chatbot" id="chatbot" aria-label="Eder Anglouan Law Office assistant">
   <div class="chatbot-head">
-    <div><strong>ELA Assistant</strong><small>EDER ANGLOUAN LAW OFFICE</small></div>
+    <div class="chatbot-brand"><div class="secretary-avatar" aria-hidden="true">👩🏻‍💼</div><div><strong>ELA Assistant</strong><small>EDER ANGLOUAN LAW OFFICE</small></div></div>
     <button class="chatbot-close" id="chatbotClose" aria-label="Close chatbot">×</button>
   </div>
   <div class="chatbot-messages" id="chatMessages">
-    <div class="chat-msg bot">Welcome to Eder Anglouan Law Office. How may I help you?</div>
+    <div class="chat-msg bot">Welcome to Eder Anglouan Law Office. I’m the office assistant. How may I help you?</div>
   </div>
   <div class="chat-options">
     <button class="chat-option" data-q="practice">Practice areas</button>
@@ -211,6 +231,19 @@
 
     setTimeout(() => addMessage(reply, 'bot'), 220);
   });
+})();
+</script>
+
+
+<script>
+(function(){
+  const params = new URLSearchParams(window.location.search);
+  const notice = document.getElementById('consultationSuccess');
+  if (params.get('submitted') === '1' && notice) {
+    notice.style.display = 'block';
+    const contact = document.getElementById('contact');
+    if (contact) setTimeout(() => contact.scrollIntoView({behavior:'smooth', block:'start'}), 100);
+  }
 })();
 </script>
 
