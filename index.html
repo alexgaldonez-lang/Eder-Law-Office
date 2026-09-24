@@ -149,6 +149,51 @@
   .consultation-success strong{display:block;margin-bottom:5px;font-family:"Cormorant Garamond",serif;font-size:21px}
   .consultation-success span{display:block}
 
+
+  /* Animated assistant */
+  @keyframes chatPulse {
+    0%,100% { transform:scale(1); box-shadow:0 10px 30px rgba(0,0,0,.22); }
+    50% { transform:scale(1.06); box-shadow:0 14px 38px rgba(0,0,0,.28); }
+  }
+  @keyframes avatarFloat {
+    0%,100% { transform:translateY(0); }
+    50% { transform:translateY(-2px); }
+  }
+  @keyframes botIn {
+    from { opacity:0; transform:translateY(10px) scale(.98); }
+    to { opacity:1; transform:translateY(0) scale(1); }
+  }
+  @keyframes typingDot {
+    0%,60%,100% { transform:translateY(0); opacity:.35; }
+    30% { transform:translateY(-4px); opacity:1; }
+  }
+  .chatbot-toggle{animation:chatPulse 3s ease-in-out infinite}
+  .secretary-avatar{animation:avatarFloat 2.4s ease-in-out infinite}
+  .chat-msg{animation:botIn .28s ease-out both}
+  .chat-typing{
+    display:inline-flex;gap:4px;align-items:center;padding:11px 13px;
+    background:#fff;border:1px solid #e2e2e2;margin:0 0 10px;border-radius:2px;
+  }
+  .chat-typing i{
+    width:5px;height:5px;border-radius:50%;background:#111;display:block;
+    animation:typingDot 1.1s infinite;
+  }
+  .chat-typing i:nth-child(2){animation-delay:.15s}
+  .chat-typing i:nth-child(3){animation-delay:.30s}
+
+  .chat-intro{
+    font-family:Inter,sans-serif;font-size:11px;line-height:1.5;
+    color:#666;margin:0 0 12px;
+  }
+  .chat-option{
+    transition:transform .15s ease, background .15s ease, color .15s ease;
+  }
+  .chat-option:hover{transform:translateY(-1px)}
+  .chat-quick-title{
+    width:100%;font:600 9px Inter,sans-serif;letter-spacing:1.2px;color:#777;
+    margin:0 0 2px;
+  }
+
 </style>
 
 <button class="chatbot-toggle" id="chatbotToggle" aria-label="Open legal office assistant">💬</button>
@@ -159,13 +204,18 @@
     <button class="chatbot-close" id="chatbotClose" aria-label="Close chatbot">×</button>
   </div>
   <div class="chatbot-messages" id="chatMessages">
+    <p class="chat-intro">Ask a quick question or choose a topic below. For advice about your specific matter, request a consultation.</p>
     <div class="chat-msg bot">Welcome to Eder Anglouan Law Office. I’m the office assistant. How may I help you?</div>
   </div>
   <div class="chat-options">
+    <div class="chat-quick-title">QUICK LEGAL Q&amp;A</div>
     <button class="chat-option" data-q="practice">Practice areas</button>
     <button class="chat-option" data-q="consultation">Schedule consultation</button>
     <button class="chat-option" data-q="location">Office location</button>
     <button class="chat-option" data-q="hours">Office hours</button>
+    <button class="chat-option" data-q="legal1">Can I get legal advice online?</button>
+    <button class="chat-option" data-q="legal2">What should I bring?</button>
+    <button class="chat-option" data-q="legal3">Is a consultation confidential?</button>
   </div>
   <form class="chat-input" id="chatForm">
     <input id="chatInput" autocomplete="off" placeholder="Ask a question...">
@@ -183,10 +233,13 @@
   const form = document.getElementById('chatForm');
 
   const answers = {
-    practice: "The website lists Civil Litigation, Criminal Law, Corporate & Commercial Law, Labor Law, Family Law, Real Estate & Property Law, and Administrative & Government Law.",
-    consultation: "You can request a consultation using the form on this page. Please provide your name, email, contact number, subject, and message. The inquiry will be sent to the law office.",
+    practice: "Our listed practice areas include Civil Litigation, Criminal Law, Corporate & Commercial Law, Labor Law, Family Law, Real Estate & Property Law, and Administrative & Government Law.",
+    consultation: "Absolutely. Use the consultation form on this page and tell us briefly what you need help with. Your inquiry will be sent to the office.",
     location: "The office is listed at Dalupang St., Cauayan City, Isabela.",
-    hours: "The current website does not specify office hours. Please contact the office directly to confirm availability."
+    hours: "The current website does not specify office hours. Please contact the office directly to confirm availability.",
+    legal1: "Online information can help you understand general legal concepts, but your specific situation may depend on facts and documents. A consultation is the appropriate place to discuss your matter.",
+    legal2: "If available, bring relevant contracts, notices, IDs, court or agency documents, correspondence, and a short timeline of what happened. The office can tell you if anything else is needed.",
+    legal3: "Attorney-client confidentiality can apply to communications made for the purpose of obtaining legal advice, subject to applicable law and circumstances. Ask the attorney about confidentiality for your particular situation."
   };
 
   function addMessage(text, who){
@@ -197,15 +250,30 @@
     messages.scrollTop = messages.scrollHeight;
   }
 
+  function showTyping(callback){
+    const typing = document.createElement('div');
+    typing.className = 'chat-typing';
+    typing.innerHTML = '<i></i><i></i><i></i>';
+    messages.appendChild(typing);
+    messages.scrollTop = messages.scrollHeight;
+    setTimeout(() => {
+      typing.remove();
+      callback();
+    }, 650);
+  }
+
   function respond(key){
     const labels = {
       practice:"Practice areas",
       consultation:"Schedule consultation",
       location:"Office location",
-      hours:"Office hours"
+      hours:"Office hours",
+      legal1:"Can I get legal advice online?",
+      legal2:"What should I bring?",
+      legal3:"Is a consultation confidential?"
     };
     addMessage(labels[key], 'user');
-    setTimeout(() => addMessage(answers[key], 'bot'), 180);
+    showTyping(() => addMessage(answers[key], 'bot'));
   }
 
   toggle.addEventListener('click', () => box.classList.toggle('open'));
@@ -223,13 +291,16 @@
     input.value = '';
 
     const t = text.toLowerCase();
-    let reply = "I can help with basic information from this website. For legal advice or a matter-specific question, please submit a consultation request so the office can respond directly.";
+    let reply = "I can help with general information from this website. Try asking about practice areas, consultations, documents to bring, confidentiality, location, or office hours.";
     if(t.includes('practice') || t.includes('service')) reply = answers.practice;
     else if(t.includes('consult') || t.includes('appointment')) reply = answers.consultation;
     else if(t.includes('where') || t.includes('address') || t.includes('location')) reply = answers.location;
     else if(t.includes('hour') || t.includes('open')) reply = answers.hours;
+    else if(t.includes('online') || t.includes('legal advice')) reply = answers.legal1;
+    else if(t.includes('bring') || t.includes('document')) reply = answers.legal2;
+    else if(t.includes('confidential') || t.includes('private')) reply = answers.legal3;
 
-    setTimeout(() => addMessage(reply, 'bot'), 220);
+    showTyping(() => addMessage(reply, 'bot'));
   });
 })();
 </script>
